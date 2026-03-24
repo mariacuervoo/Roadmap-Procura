@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Roadmap Portal de Procura</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;font-size:13px}
+.page{max-width:1140px;margin:0 auto;padding:32px 24px}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.sub{font-size:13px;color:#73726c;margin-bottom:24px}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.metric{background:#fff;border:0.5px solid #e2e0d8;border-radius:10px;padding:14px 16px}
+.metric .label{font-size:11px;color:#73726c;margin-bottom:4px}
+.metric .val{font-size:22px;font-weight:600}
+.metric .val.blue{color:#185FA5}
+.metric .val.green{color:#3B6D11}
+.metric .val.amber{color:#854F0B}
+.metric .val.gray{color:#5F5E5A}
+
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:20px;align-items:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#5F5E5A}
+.dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:0.5px solid #e2e0d8;margin-bottom:24px}
+thead tr{background:#f1efe8}
+th{padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:#5F5E5A;text-transform:uppercase;letter-spacing:.04em;border-bottom:0.5px solid #e2e0d8;white-space:nowrap}
+td{padding:10px 12px;border-bottom:0.5px solid #f1efe8;vertical-align:top;font-size:12px;color:#2c2c2a;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+
+.epica{font-weight:600;font-size:12px;white-space:nowrap}
+.epica.req{color:#712B13}
+.epica.sol{color:#0C447C}
+.epica.rec{color:#085041}
+.epica.apr{color:#3C3489}
+.epica.bas{color:#633806}
+.epica.rel{color:#27500A}
+
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.pill.m0{background:#FAECE7;color:#712B13}
+.pill.m1{background:#FAEEDA;color:#633806}
+.pill.m2{background:#E6F1FB;color:#0C447C}
+.pill.m3{background:#E1F5EE;color:#085041}
+.pill.m4{background:#EEEDFE;color:#3C3489}
+.pill.m5{background:#EAF3DE;color:#27500A}
+
+.tasks{display:flex;flex-direction:column;gap:3px}
+.task{font-size:11px;color:#444441;display:flex;align-items:flex-start;gap:5px;line-height:1.5}
+.task::before{content:"·";color:#888780;flex-shrink:0;margin-top:1px}
+
+.status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.status.pending{background:#f1efe8;color:#5F5E5A}
+.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sdot.pending{background:#888780}
+
+.milestone{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#993C1D;background:#FAECE7;padding:3px 9px;border-radius:20px}
+
+.note{background:#FAEEDA;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:4px;font-size:12px;color:#633806;line-height:1.6}
+.note strong{font-weight:600}
+
+.section-title{font-size:13px;font-weight:600;color:#444441;margin:8px 0 10px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:0.5px;background:#e2e0d8}
+
+.tag-ebs{display:inline-block;background:#E6F1FB;color:#185FA5;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.tag-open{display:inline-block;background:#FAECE7;color:#993C1D;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.tag-mvp{display:inline-block;background:#EAF3DE;color:#3B6D11;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+
+.countries{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.country{font-size:11px;background:#f1efe8;border:0.5px solid #e2e0d8;border-radius:6px;padding:2px 8px;color:#444441}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Portal de Procura — Roadmap</h1>
+  <p class="sub">MVP · Marzo – Julio 2026 · Países: Argentina, Colombia, Venezuela</p>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Duración total</div><div class="val blue">5 meses</div></div>
+    <div class="metric"><div class="label">Módulos</div><div class="val green">3</div></div>
+    <div class="metric"><div class="label">Países MVP</div><div class="val amber">3</div></div>
+    <div class="metric"><div class="label">Release MVP</div><div class="val gray">Jul 2026</div></div>
+  </div>
+
+  <div class="legend">
+    <span style="font-size:12px;color:#73726c;font-weight:500">Fases:</span>
+    <span class="legend-item"><span class="dot" style="background:#F0997B"></span>Requerimientos</span>
+    <span class="legend-item"><span class="dot" style="background:#FAC775"></span>Base / Configuración</span>
+    <span class="legend-item"><span class="dot" style="background:#B5D4F4"></span>Solicitudes</span>
+    <span class="legend-item"><span class="dot" style="background:#9FE1CB"></span>Recepciones</span>
+    <span class="legend-item"><span class="dot" style="background:#CECBF6"></span>Aprobaciones</span>
+    <span class="legend-item"><span class="dot" style="background:#C0DD97"></span>Release</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:88px">Mes</th>
+        <th style="width:100px">Fechas</th>
+        <th style="width:130px">Fase / Épica</th>
+        <th>Actividades</th>
+        <th style="width:108px">Estado</th>
+        <th style="width:120px">Hito</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- MES 0: REQUERIMIENTOS -->
+      <tr>
+        <td><span class="pill m0">Marzo</span></td>
+        <td style="color:#73726c">1 – 31 mar</td>
+        <td><span class="epica req">Definición de requerimientos</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Levantamiento de requerimientos funcionales por módulo (Solicitudes, Recepciones, Aprobaciones)</div>
+            <div class="task">Definición del catálogo de productos: funcionalidad a desarrollar (no existe en EBS) <span class="tag-open">por definir</span></div>
+            <div class="task">Mapeo de integración con EBS: aprobadores por grupo según cargo, OC, cierre OC</div>
+            <div class="task">Definición de lógica multi-país: Argentina, Colombia, Venezuela <span class="tag-mvp">MVP</span></div>
+            <div class="task">Definición de escala de aprobaciones por país y capa de negocio</div>
+            <div class="task">Definición de diferencia en factura: importe pedido vs importe recibido</div>
+            <div class="task">Wireframes y flujos de pantallas principales</div>
+            <div class="task">Validación y sign-off de requerimientos con stakeholders</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td><span class="milestone">Sign-off requerimientos</span></td>
+      </tr>
+
+      <!-- MES 1: BASE -->
+      <tr>
+        <td><span class="pill m1">Abril</span></td>
+        <td style="color:#73726c">1 – 30 abr</td>
+        <td><span class="epica bas">Login</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Login vía Google (OAuth)</div>
+            <div class="task">Selección de país con ícono de bandera (Argentina, Colombia, Venezuela)</div>
+            <div class="task">Lógica de cambio de país y sesión</div>
+            <div class="task">Estructura de navegación: módulos Solicitudes, Recepciones, Aprobaciones</div>
+            <div class="task">Indicador: total solicitudes pendientes de aprobar</div>
+            <div class="task">Indicador: órdenes de compra por recibir</div>
+            <div class="task">Inicio desarrollo módulo Solicitudes: listado con filtros (Descripción, Fecha, Estado)</div>
+            <div class="task">Acciones sobre solicitud: Ver detalle, Editar, Cancelar, Copiar, Recepcionar</div>
+            <div class="task">Estado "Rechazado" redirige a historial de aprobaciones</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td><span class="milestone">Base + listado solicitudes</span></td>
+      </tr>
+
+      <!-- MES 2: SOLICITUDES -->
+      <tr>
+        <td><span class="pill m2">Mayo</span></td>
+        <td style="color:#73726c">1 – 31 may</td>
+        <td><span class="epica sol">Solicitudes</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Crear solicitud: buscar producto y proveedor (catálogo a desarrollar, no viene de EBS) <span class="tag-open">requiere diseño</span></div>
+            <div class="task">Definir cantidad y detalle de ítems</div>
+            <div class="task">Centro de costos: Sí/No · Jerarquía: Vicepresidencia → Áreas → Valores</div>
+            <div class="task">Categorización CAPEX / OPEX</div>
+            <div class="task">Aprobador: obtenido de grupo de aprobación en EBS según cargo <span class="tag-ebs">EBS</span></div>
+            <div class="task">Confirmación y envío de solicitud</div>
+            <div class="task">Otro tipo de compra: Anexar, Justificación, Detalle, Centro de costos</div>
+            <div class="task">Compra por contrato: Anexar, Justificación, Detalle, Centro de costos, Aprobador</div>
+            <div class="task">QA y corrección de bugs — módulo Solicitudes</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td><span class="milestone">Demo Solicitudes</span></td>
+      </tr>
+
+      <!-- MES 3: RECEPCIONES -->
+      <tr>
+        <td><span class="pill m3">Mayo</span></td>
+        <td style="color:#73726c">1 – 30 jun</td>
+        <td><span class="epica rec">Recepciones</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Listado de recepciones con filtros: Descripción, Fecha, Proveedor</div>
+            <div class="task">Acciones: Editar, Ver detalle, Corregir, Recepcionar</div>
+            <div class="task">Tabla detalle: Nombre solicitante, Tipo conexión, Importe, Cantidad</div>
+            <div class="task">Diferencia en factura: importe de pedido vs importe recibido (cálculo automático)</div>
+            <div class="task">Ver solicitud asociada: info general + anexos (General, Recibido, Facturado, Anticipado)</div>
+            <div class="task">Ver recibo / ver tabla de recibo</div>
+            <div class="task">Cierre OC: selección de OC desde EBS + motivo <span class="tag-ebs">EBS</span></div>
+            <div class="task">Corrección de recibos</div>
+            <div class="task">QA y corrección de bugs — módulo Recepciones</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td><span class="milestone">Demo Recepciones</span></td>
+      </tr>
+
+      <!-- MES 4: APROBACIONES -->
+      <tr>
+        <td><span class="pill m4">Junio</span></td>
+        <td style="color:#73726c">1 – 15 jul</td>
+        <td><span class="epica apr">Aprobaciones</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Panel aprobador: Resumen, Control de presupuesto, Escala de aprobaciones, Orden de Compra</div>
+            <div class="task">Aprobador suplente</div>
+            <div class="task">Flujo de aprobación por niveles según capa de negocio por país</div>
+            <div class="task">Rechazar solicitud con comentario → pasa a historial</div>
+            <div class="task">Delegación de aprobación</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td></td>
+      </tr>
+
+      <!-- MES 4: RELEASE -->
+      <tr>
+        <td><span class="pill m5">Julio</span></td>
+        <td style="color:#73726c">16 – 31 jul</td>
+        <td><span class="epica rel">Release MVP</span></td>
+        <td>
+          <div class="tasks">
+            <div class="task">Integración end-to-end: Solicitud → Recepción → Aprobación</div>
+            <div class="task">Pruebas de regresión multi-país: Argentina, Colombia, Venezuela</div>
+            <div class="task">Ajustes finales de UX/UI</div>
+            <div class="task">Corrección de bugs críticos</div>
+            <div class="task">Documentación técnica y de usuario</div>
+            <div class="task">Despliegue en ambiente productivo</div>
+          </div>
+        </td>
+        <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
+        <td><span class="milestone">Release v1.0 MVP</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="section-title">Integraciones con EBS</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Dato / Funcionalidad</th>
+        <th>Módulo</th>
+        <th>Fuente en EBS</th>
+        <th>Notas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Listado de aprobadores</td>
+        <td><span class="epica sol">Solicitudes</span></td>
+        <td>Grupo de aprobación según cargo</td>
+        <td>Aplica para aprobación de solicitudes</td>
+      </tr>
+      <tr>
+        <td>Órdenes de Compra (OC)</td>
+        <td><span class="epica rec">Recepciones</span></td>
+        <td>EBS — módulo de compras</td>
+        <td>Usadas para cierre de OC y recepciones</td>
+      </tr>
+      <tr>
+        <td>Catálogo de productos</td>
+        <td><span class="epica sol">Solicitudes</span></td>
+        <td>No existe en EBS</td>
+        <td>Funcionalidad nueva a desarrollar — requiere definición de diseño y datos</td>
+      </tr>
+      <tr>
+        <td>Diferencia en factura</td>
+        <td><span class="epica rec">Recepciones</span></td>
+        <td>Calculado en el portal</td>
+        <td>Importe pedido − importe recibido</td>
+      </tr>
+      <tr>
+        <td>Escala de aprobaciones por país</td>
+        <td><span class="epica apr">Aprobaciones</span></td>
+        <td>Configuración por capa de negocio</td>
+        <td>Varía por país: AR, CO, VE</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Países MVP</div>
+  <div class="countries">
+    <span class="country">🇦🇷 Argentina</span>
+    <span class="country">🇨🇴 Colombia</span>
+    <span class="country">🇻🇪 Venezuela</span>
+  </div>
+
+  <div class="note" style="margin-top:16px">
+    <strong>Nota técnica:</strong> La lógica de aprobaciones debe trabajarse por capa de negocio por país. Los montos, aprobadores y escala de aprobaciones varían según el país activo en sesión. El catálogo de productos requiere diseño funcional propio ya que no existe fuente en EBS — se recomienda definirlo durante el mes de requerimientos (Abril).
+  </div>
+
+</div>
+</body>
+</html>
