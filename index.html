@@ -3,98 +3,764 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Roadmap Portal de Procura</title>
+<meta name="theme-color" content="#1a4a7c"/>
+<title>Roadmap Portal de Procura · Farmatodo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
+:root{
+  /* Azul corporativo (logo web) + escala de azules */
+  --brand:#418FDE;
+  --navy:#0f2847;
+  --ink:#0f1b2e;
+  --ink-soft:#2d4d73;
+  --muted:#5a7190;
+  --line:rgba(15,40,90,.1);
+  --surface:rgba(255,255,255,.82);
+  --surface-solid:#fff;
+  --shadow:0 1px 2px rgba(15,40,90,.06),0 16px 48px -16px rgba(15,40,90,.16);
+  --shadow-sm:0 1px 3px rgba(15,40,90,.07);
+  --radius-lg:22px;
+  --radius-md:14px;
+  --radius-sm:10px;
+  --accent:#1a4a7c;
+  --accent-soft:#e8f0fa;
+  --glow:radial-gradient(ellipse 85% 55% at 50% -25%,rgba(65,143,222,.22),transparent 58%);
+  --ease-out:cubic-bezier(.22,1,.36,1);
+
+  /* Fases: solo matices de azul (claro → intenso) */
+  --req-soft:#e8f0fb;
+  --req:#356096;
+  --bas-soft:#dbe8f8;
+  --bas:#2d5580;
+  --sol-soft:#c9daf2;
+  --sol:#254a73;
+  --rec-soft:#b5caeb;
+  --rec:#1f4268;
+  --apr-soft:#9fb9e3;
+  --apr:#1a3a5c;
+  --rel-soft:#8aa8d8;
+  --rel:#0f2f4d;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;font-size:13px}
-.page{max-width:1140px;margin:0 auto;padding:32px 24px}
-h1{font-size:22px;font-weight:600;margin-bottom:4px}
-.sub{font-size:13px;color:#73726c;margin-bottom:24px}
 
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
-.metric{background:#fff;border:0.5px solid #e2e0d8;border-radius:10px;padding:14px 16px}
-.metric .label{font-size:11px;color:#73726c;margin-bottom:4px}
-.metric .val{font-size:22px;font-weight:600}
-.metric .val.blue{color:#185FA5}
-.metric .val.green{color:#3B6D11}
-.metric .val.amber{color:#854F0B}
-.metric .val.gray{color:#5F5E5A}
+html{scroll-behavior:smooth}
 
-.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:20px;align-items:center}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#5F5E5A}
-.dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .badge-dot,.metric{animation:none!important}
+}
 
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:0.5px solid #e2e0d8;margin-bottom:24px}
-thead tr{background:#f1efe8}
-th{padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:#5F5E5A;text-transform:uppercase;letter-spacing:.04em;border-bottom:0.5px solid #e2e0d8;white-space:nowrap}
-td{padding:10px 12px;border-bottom:0.5px solid #f1efe8;vertical-align:top;font-size:12px;color:#2c2c2a;line-height:1.5}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafaf8}
+body{
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  background:#e4ebf5;
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.55;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
 
-.epica{font-weight:600;font-size:12px;white-space:nowrap}
-.epica.req{color:#712B13}
-.epica.sol{color:#0C447C}
-.epica.rec{color:#085041}
-.epica.apr{color:#3C3489}
-.epica.bas{color:#633806}
-.epica.rel{color:#27500A}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    var(--glow),
+    radial-gradient(ellipse 55% 42% at 100% 0%,rgba(26,74,124,.1),transparent 52%),
+    radial-gradient(ellipse 48% 38% at 0% 100%,rgba(65,143,222,.12),transparent 48%);
+  pointer-events:none;
+  z-index:0;
+}
 
-.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
-.pill.m0{background:#FAECE7;color:#712B13}
-.pill.m1{background:#FAEEDA;color:#633806}
-.pill.m2{background:#E6F1FB;color:#0C447C}
-.pill.m3{background:#E1F5EE;color:#085041}
-.pill.m4{background:#EEEDFE;color:#3C3489}
-.pill.m5{background:#EAF3DE;color:#27500A}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  opacity:.032;
+  pointer-events:none;
+  z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-.tasks{display:flex;flex-direction:column;gap:3px}
-.task{font-size:11px;color:#444441;display:flex;align-items:flex-start;gap:5px;line-height:1.5}
-.task::before{content:"·";color:#888780;flex-shrink:0;margin-top:1px}
+.page{
+  position:relative;
+  z-index:1;
+  max-width:1180px;
+  margin:0 auto;
+  padding:36px 20px 64px;
+}
 
-.status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap}
-.status.pending{background:#f1efe8;color:#5F5E5A}
-.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.sdot.pending{background:#888780}
+.hero{
+  position:relative;
+  margin-bottom:28px;
+  padding:32px 34px 30px;
+  background:var(--surface);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
 
-.milestone{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#993C1D;background:#FAECE7;padding:3px 9px;border-radius:20px}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--req-soft),var(--bas-soft),var(--sol-soft),var(--rec-soft),var(--apr-soft),var(--brand));
+  opacity:1;
+}
 
-.note{background:#FAEEDA;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:4px;font-size:12px;color:#633806;line-height:1.6}
-.note strong{font-weight:600}
+.hero-top{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:8px;
+}
 
-.section-title{font-size:13px;font-weight:600;color:#444441;margin:8px 0 10px;display:flex;align-items:center;gap:8px}
-.section-title::after{content:'';flex:1;height:0.5px;background:#e2e0d8}
+.hero-main{flex:1;min-width:min(100%,280px)}
 
-.tag-ebs{display:inline-block;background:#E6F1FB;color:#185FA5;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
-.tag-open{display:inline-block;background:#FAECE7;color:#993C1D;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
-.tag-mvp{display:inline-block;background:#EAF3DE;color:#3B6D11;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.brand-lockup{
+  flex-shrink:0;
+  align-self:flex-start;
+  padding:4px 0;
+}
 
-.countries{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.country{font-size:11px;background:#f1efe8;border:0.5px solid #e2e0d8;border-radius:6px;padding:2px 8px;color:#444441}
+.brand-logo{
+  display:block;
+  height:44px;
+  width:auto;
+  max-width:min(260px,48vw);
+}
+
+@media (max-width:640px){
+  .hero-top{flex-direction:column;align-items:stretch}
+  .brand-lockup{align-self:flex-start}
+  .brand-logo{max-width:220px;height:40px}
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--accent-soft);
+  padding:7px 14px;
+  border-radius:999px;
+  border:1px solid rgba(26,74,124,.14);
+}
+
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 2px rgba(65,143,222,.25);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.92)}}
+
+h1{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.7rem,3.6vw,2.25rem);
+  font-weight:600;
+  font-variation-settings:'SOFT' 40,'WONK' 0;
+  color:var(--ink);
+  letter-spacing:-.025em;
+  line-height:1.18;
+  margin-top:12px;
+  max-width:680px;
+}
+
+h1 .title-accent{
+  background:linear-gradient(105deg,var(--navy) 0%,var(--accent) 42%,var(--brand) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.sub{
+  font-size:15px;
+  color:var(--muted);
+  margin-top:11px;
+  max-width:580px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px 12px;
+}
+
+.sub-sep{color:rgba(90,113,144,.45);font-weight:300}
+
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:28px;
+}
+
+@media (max-width:900px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width:480px){
+  .metrics{grid-template-columns:1fr}
+}
+
+.metric{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  background:var(--surface-solid);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  padding:16px 18px;
+  transition:border-color .22s var(--ease-out),box-shadow .22s var(--ease-out),transform .22s var(--ease-out);
+  animation:metric-in .55s var(--ease-out) backwards;
+}
+
+.metric:nth-child(1){animation-delay:.04s}
+.metric:nth-child(2){animation-delay:.1s}
+.metric:nth-child(3){animation-delay:.16s}
+.metric:nth-child(4){animation-delay:.22s}
+
+@keyframes metric-in{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.metric:hover{
+  transform:translateY(-3px);
+  border-color:rgba(26,74,124,.22);
+  box-shadow:0 10px 28px -14px rgba(26,74,124,.18),var(--shadow-sm);
+}
+
+.metric-icon{
+  flex-shrink:0;
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  color:var(--accent);
+  background:linear-gradient(145deg,var(--accent-soft),#fff);
+  border:1px solid rgba(26,74,124,.12);
+}
+
+.metric-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+.metric[data-tone="b1"] .metric-icon{color:#1a4a7c;background:linear-gradient(145deg,#e3ebf7,#fff);border-color:rgba(26,74,124,.14)}
+.metric[data-tone="b2"] .metric-icon{color:#245a8c;background:linear-gradient(145deg,#d8e4f4,#fff);border-color:rgba(36,90,140,.14)}
+.metric[data-tone="b3"] .metric-icon{color:#2f6ba0;background:linear-gradient(145deg,#cdddf0,#fff);border-color:rgba(47,107,160,.14)}
+.metric[data-tone="b4"] .metric-icon{color:var(--brand);background:linear-gradient(145deg,#d9e9fb,#fff);border-color:rgba(65,143,222,.2)}
+
+.metric-body{min-width:0}
+
+.metric .label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.metric .val{
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  font-size:1.55rem;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  line-height:1.15;
+}
+
+.metric .val.t1{color:#1a4a7c}
+.metric .val.t2{color:#245a8c}
+.metric .val.t3{color:#2f6ba0}
+.metric .val.t4{color:#3478b3}
+
+.phase-timeline-wrap{margin-bottom:22px}
+
+.phase-timeline-label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.phase-timeline-label::before{
+  content:'';
+  width:4px;height:14px;
+  border-radius:2px;
+  background:linear-gradient(180deg,var(--accent),var(--brand));
+}
+
+.phase-timeline{
+  list-style:none;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+@media (min-width:720px){
+  .phase-timeline{flex-wrap:nowrap}
+}
+
+.phase-timeline li{
+  flex:1 1 auto;
+  min-width:72px;
+  text-align:center;
+  padding:11px 8px;
+  border-radius:var(--radius-sm);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.02em;
+  border:1px solid var(--line);
+  background:var(--surface-solid);
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out);
+}
+
+.phase-timeline li:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px -10px rgba(26,74,124,.18);
+}
+
+.phase-timeline li .pt-short{display:block;font-size:10px;font-weight:600;opacity:.75;margin-top:3px;text-transform:none;letter-spacing:0}
+
+.phase-timeline .pt-req{background:var(--req-soft);color:var(--req);border-color:rgba(53,96,150,.22)}
+.phase-timeline .pt-bas{background:var(--bas-soft);color:var(--bas);border-color:rgba(45,85,128,.2)}
+.phase-timeline .pt-sol{background:var(--sol-soft);color:var(--sol);border-color:rgba(37,74,115,.2)}
+.phase-timeline .pt-rec{background:var(--rec-soft);color:var(--rec);border-color:rgba(31,66,104,.2)}
+.phase-timeline .pt-apr{background:var(--apr-soft);color:var(--apr);border-color:rgba(26,58,92,.2)}
+.phase-timeline .pt-rel{background:linear-gradient(180deg,#e0eaf9,var(--rel-soft));color:var(--rel);border-color:rgba(15,47,77,.22)}
+
+.legend-wrap{
+  margin-bottom:20px;
+  padding:18px 22px;
+  background:var(--surface-solid);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+}
+
+.legend-title{
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink-soft);
+  padding:7px 12px;
+  border-radius:999px;
+  background:#eef3fa;
+  border:1px solid rgba(26,74,124,.08);
+  transition:background .15s ease,border-color .15s ease;
+}
+
+.legend-item:hover{background:#e4ecf7;border-color:rgba(26,74,124,.16)}
+
+.dot{
+  width:11px;
+  height:11px;
+  border-radius:4px;
+  flex-shrink:0;
+  box-shadow:0 0 0 1px rgba(15,40,90,.08) inset;
+}
+
+.dot-req{background:#9ec5eb}
+.dot-bas{background:#85b4e5}
+.dot-sol{background:#6ca3de}
+.dot-rec{background:#5592d8}
+.dot-apr{background:var(--brand)}
+.dot-rel{background:#2a6bb8}
+
+.table-scroll{
+  overflow:auto;
+  max-height:min(78vh,1100px);
+  margin-bottom:28px;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--line);
+  background:var(--surface-solid);
+  box-shadow:var(--shadow);
+  -webkit-overflow-scrolling:touch;
+}
+
+table{
+  width:100%;
+  min-width:920px;
+  border-collapse:collapse;
+}
+
+thead tr{
+  background:linear-gradient(180deg,#eef3fa 0%,#e2eaf6 100%);
+}
+
+th{
+  padding:13px 16px;
+  text-align:left;
+  font-size:10px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+  position:sticky;
+  top:0;
+  z-index:3;
+  background:linear-gradient(180deg,#eaf1f9 0%,#dee8f4 100%);
+  box-shadow:0 1px 0 rgba(15,40,90,.07);
+}
+
+td{
+  padding:15px 16px;
+  border-bottom:1px solid rgba(15,40,90,.06);
+  vertical-align:top;
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.55;
+}
+
+tbody tr{transition:background .16s ease}
+
+tbody tr:nth-child(even) td{background:rgba(241,246,252,.75)}
+tbody tr:hover td{background:rgba(26,74,124,.055)!important}
+
+tbody tr:last-child td{border-bottom:none}
+
+td:first-child{
+  position:relative;
+  border-left:4px solid transparent;
+}
+
+tr[data-phase="m0"] td:first-child{border-left-color:var(--req)}
+tr[data-phase="m1"] td:first-child{border-left-color:var(--bas)}
+tr[data-phase="m2"] td:first-child{border-left-color:var(--sol)}
+tr[data-phase="m3"] td:first-child{border-left-color:var(--rec)}
+tr[data-phase="m4"] td:first-child{border-left-color:var(--apr)}
+tr[data-phase="m5"] td:first-child{border-left-color:var(--rel)}
+
+.epica{
+  font-weight:700;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.epica.req{color:var(--req)}
+.epica.bas{color:var(--bas)}
+.epica.sol{color:var(--sol)}
+.epica.rec{color:var(--rec)}
+.epica.apr{color:var(--apr)}
+.epica.rel{color:var(--rel)}
+
+.pill{
+  display:inline-block;
+  padding:6px 13px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  border:1px solid transparent;
+}
+
+.pill.m0{background:var(--req-soft);color:var(--req);border-color:rgba(53,96,150,.2)}
+.pill.m1{background:var(--bas-soft);color:var(--bas);border-color:rgba(45,85,128,.2)}
+.pill.m2{background:var(--sol-soft);color:var(--sol);border-color:rgba(37,74,115,.2)}
+.pill.m3{background:var(--rec-soft);color:var(--rec);border-color:rgba(31,66,104,.2)}
+.pill.m4{background:var(--apr-soft);color:var(--apr);border-color:rgba(26,58,92,.2)}
+.pill.m5{background:linear-gradient(180deg,#f0f5fc,var(--rel-soft));color:var(--rel);border-color:rgba(15,47,77,.22)}
+
+.tasks{display:flex;flex-direction:column;gap:7px}
+
+.task{
+  font-size:13px;
+  color:var(--ink-soft);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  line-height:1.5;
+  padding:4px 0 4px 2px;
+}
+
+.task::before{
+  content:'';
+  width:7px;
+  height:7px;
+  margin-top:6px;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:.55;
+  flex-shrink:0;
+  box-shadow:0 0 0 2px rgba(26,74,124,.12);
+}
+
+tr[data-phase="m0"] .task::before{background:var(--req);box-shadow:0 0 0 2px rgba(53,96,150,.2);opacity:.9}
+tr[data-phase="m1"] .task::before{background:var(--bas);box-shadow:0 0 0 2px rgba(45,85,128,.2);opacity:.9}
+tr[data-phase="m2"] .task::before{background:var(--sol);box-shadow:0 0 0 2px rgba(37,74,115,.2);opacity:.9}
+tr[data-phase="m3"] .task::before{background:var(--rec);box-shadow:0 0 0 2px rgba(31,66,104,.2);opacity:.9}
+tr[data-phase="m4"] .task::before{background:var(--apr);box-shadow:0 0 0 2px rgba(26,58,92,.2);opacity:.9}
+tr[data-phase="m5"] .task::before{background:var(--brand);box-shadow:0 0 0 2px rgba(65,143,222,.28);opacity:1}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:600;
+  padding:6px 12px;
+  border-radius:999px;
+  white-space:nowrap;
+  border:1px solid rgba(90,113,144,.22);
+}
+
+.status.pending{background:#e8edf5;color:var(--muted)}
+
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sdot.pending{background:#8fa3bd}
+
+.milestone{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--bas);
+  background:linear-gradient(135deg,#fff,var(--bas-soft));
+  padding:7px 13px;
+  border-radius:999px;
+  border:1px solid rgba(45,85,128,.22);
+  box-shadow:0 1px 2px rgba(26,74,124,.06);
+}
+
+tr[data-phase="m5"] .milestone{
+  color:var(--rel);
+  background:linear-gradient(135deg,#f7faff,var(--rel-soft));
+  border-color:rgba(15,47,77,.25);
+  box-shadow:0 1px 3px rgba(65,143,222,.1);
+}
+
+.note{
+  background:linear-gradient(135deg,#f5f8fd 0%,#eef3fb 100%);
+  border-left:4px solid var(--brand);
+  border-radius:0 var(--radius-md) var(--radius-md) 0;
+  padding:18px 22px;
+  margin-top:10px;
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.68;
+  box-shadow:0 4px 24px rgba(26,74,124,.1);
+  border:1px solid rgba(26,74,124,.1);
+  border-left-width:4px;
+}
+
+.note strong{font-weight:700;color:var(--navy)}
+
+.section-title{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:1.22rem;
+  font-weight:600;
+  font-variation-settings:'SOFT' 40,'WONK' 0;
+  color:var(--ink);
+  margin:36px 0 16px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.section-title::before{
+  content:'';
+  width:6px;height:1.1em;
+  border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--brand));
+  flex-shrink:0;
+}
+
+.section-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--line),transparent);
+}
+
+.tag-ebs{display:inline-block;background:var(--sol-soft);color:var(--sol);font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-left:6px;vertical-align:middle;border:1px solid rgba(37,74,115,.18)}
+.tag-open{display:inline-block;background:var(--req-soft);color:var(--req);font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-left:6px;vertical-align:middle;border:1px solid rgba(53,96,150,.18)}
+.tag-mvp{display:inline-block;background:linear-gradient(180deg,#e8f0fb,var(--apr-soft));color:var(--apr);font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-left:6px;vertical-align:middle;border:1px solid rgba(26,58,92,.18)}
+
+.countries{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+
+.country{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  font-size:13px;
+  font-weight:600;
+  background:var(--surface-solid);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 18px 8px 10px;
+  color:var(--ink-soft);
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s var(--ease-out),border-color .2s ease,box-shadow .2s ease;
+}
+
+.country-flag{
+  flex-shrink:0;
+  width:34px;
+  height:24px;
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(15,40,90,.12),0 2px 6px rgba(15,40,90,.08);
+}
+
+.country-flag svg{display:block;width:100%;height:100%}
+
+.country:hover{
+  transform:translateY(-2px);
+  border-color:rgba(26,74,124,.2);
+  box-shadow:0 8px 22px -12px rgba(26,74,124,.2);
+}
+
+.integrations-card{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--line);
+  background:var(--surface-solid);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin-bottom:8px;
+}
+
+.integrations-card table{min-width:0;width:100%}
+.integrations-card td,.integrations-card th{font-size:14px}
+.integrations-card thead th{position:static;box-shadow:none;background:#e8f0f7}
+.integrations-card tbody tr:nth-child(even) td{background:rgba(241,246,252,.85)}
+.integrations-card tbody tr:hover td{background:rgba(26,74,124,.045)!important}
+
+.footer-note{margin-top:22px}
+
+.page-footer{
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+}
+
+:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:2px;
+}
+
+@media print{
+  body::before,body::after,.badge-dot{display:none!important}
+  .table-scroll{max-height:none;overflow:visible;box-shadow:none}
+  thead th{position:static;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .hero{break-inside:avoid}
+}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <h1>Portal de Procura — Roadmap</h1>
-  <p class="sub">MVP · Marzo – Julio 2026 · Países: Argentina, Colombia, Venezuela</p>
+  <header class="hero">
+    <div class="hero-top">
+      <div class="hero-main">
+        <span class="badge"><span class="badge-dot" aria-hidden="true"></span>Roadmap activo</span>
+        <h1>Portal de <span class="title-accent">Procura</span></h1>
+        <p class="sub">
+          <span>MVP</span><span class="sub-sep" aria-hidden="true">|</span>
+          <span>Marzo – Julio 2026</span>
+          <span class="sub-sep" aria-hidden="true">|</span>
+          <span>AR · CO · VE</span>
+        </p>
+      </div>
+      <div class="brand-lockup">
+        <img class="brand-logo" src="logo-farmatodo-blue.svg" alt="Farmatodo" width="240" height="47"/>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric" data-tone="b1">
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <div class="metric-body">
+          <div class="label">Duración total</div>
+          <div class="val t1">5 meses</div>
+        </div>
+      </div>
+      <div class="metric" data-tone="b2">
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="metric-body">
+          <div class="label">Módulos</div>
+          <div class="val t2">3</div>
+        </div>
+      </div>
+      <div class="metric" data-tone="b3">
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="metric-body">
+          <div class="label">Países MVP</div>
+          <div class="val t3">3</div>
+        </div>
+      </div>
+      <div class="metric" data-tone="b4">
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+        </div>
+        <div class="metric-body">
+          <div class="label">Release MVP</div>
+          <div class="val t4">Jul 2026</div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <div class="metrics">
-    <div class="metric"><div class="label">Duración total</div><div class="val blue">5 meses</div></div>
-    <div class="metric"><div class="label">Módulos</div><div class="val green">3</div></div>
-    <div class="metric"><div class="label">Países MVP</div><div class="val amber">3</div></div>
-    <div class="metric"><div class="label">Release MVP</div><div class="val gray">Jul 2026</div></div>
+  <div class="phase-timeline-wrap">
+    <p class="phase-timeline-label">Vista rápida del plan</p>
+    <ol class="phase-timeline" aria-label="Fases del roadmap en orden">
+      <li class="pt-req">Requerimientos<span class="pt-short">Mar–Abr</span></li>
+      <li class="pt-bas">Base<span class="pt-short">Abr</span></li>
+      <li class="pt-sol">Solicitudes<span class="pt-short">May</span></li>
+      <li class="pt-rec">Recepciones<span class="pt-short">May–Jun</span></li>
+      <li class="pt-apr">Aprobaciones<span class="pt-short">Jun–Jul</span></li>
+      <li class="pt-rel">Release<span class="pt-short">Jul</span></li>
+    </ol>
   </div>
 
-  <div class="legend">
-    <span style="font-size:12px;color:#73726c;font-weight:500">Fases:</span>
-    <span class="legend-item"><span class="dot" style="background:#F0997B"></span>Requerimientos</span>
-    <span class="legend-item"><span class="dot" style="background:#FAC775"></span>Base / Configuración</span>
-    <span class="legend-item"><span class="dot" style="background:#B5D4F4"></span>Solicitudes</span>
-    <span class="legend-item"><span class="dot" style="background:#9FE1CB"></span>Recepciones</span>
-    <span class="legend-item"><span class="dot" style="background:#CECBF6"></span>Aprobaciones</span>
-    <span class="legend-item"><span class="dot" style="background:#C0DD97"></span>Release</span>
+  <div class="legend-wrap">
+    <div class="legend-title">Leyenda de fases</div>
+    <div class="legend">
+      <span class="legend-item"><span class="dot dot-req"></span>Requerimientos</span>
+      <span class="legend-item"><span class="dot dot-bas"></span>Base / Configuración</span>
+      <span class="legend-item"><span class="dot dot-sol"></span>Solicitudes</span>
+      <span class="legend-item"><span class="dot dot-rec"></span>Recepciones</span>
+      <span class="legend-item"><span class="dot dot-apr"></span>Aprobaciones</span>
+      <span class="legend-item"><span class="dot dot-rel"></span>Release</span>
+    </div>
   </div>
 
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla detallada del roadmap">
   <table>
     <thead>
       <tr>
@@ -108,40 +774,42 @@ tr:hover td{background:#fafaf8}
     </thead>
     <tbody>
 
-      <!-- MES 0: REQUERIMIENTOS -->
-      <tr>
-        <td><span class="pill m0">Marzo</span></td>
-        <td style="color:#73726c">1 – 31 mar</td>
+      <tr data-phase="m0">
+        <td><span class="pill m0">Marzo - Abril</span></td>
+        <td style="color:var(--muted)">1 – 31 mar</td>
         <td><span class="epica req">Definición de requerimientos</span></td>
         <td>
           <div class="tasks">
             <div class="task">Levantamiento de requerimientos funcionales por módulo (Solicitudes, Recepciones, Aprobaciones)</div>
             <div class="task">Definición del catálogo de productos: funcionalidad a desarrollar (no existe en EBS) <span class="tag-open">por definir</span></div>
+            <div class="task">Lógica de cambio de país y sesión</div>
+            <div class="task">Indicador: total solicitudes pendientes de aprobar <span class="tag-open">Interfaz requerida</span></div>
+            <div class="task">Indicador: órdenes de compra por recibir <span class="tag-open">Interfaz requerida</span></div>
+            <div class="task">Validación del perfil de usuario en EBS <span class="tag-ebs">EBS</span></div>
             <div class="task">Mapeo de integración con EBS: aprobadores por grupo según cargo, OC, cierre OC</div>
             <div class="task">Definición de lógica multi-país: Argentina, Colombia, Venezuela <span class="tag-mvp">MVP</span></div>
             <div class="task">Definición de escala de aprobaciones por país y capa de negocio</div>
             <div class="task">Definición de diferencia en factura: importe pedido vs importe recibido</div>
             <div class="task">Wireframes y flujos de pantallas principales</div>
             <div class="task">Validación y sign-off de requerimientos con stakeholders</div>
+            <div class="task">Determinar el estatus de aprobación de la solicitud de EBS (el flujo de quien ya aprobó y quien falta)</div>
+            <div class="task">¿Las recepciones se deben ver por perfil, por país, por proovedor?</div>
+            <div class="task">¿El aprobador suplente se modifica desde el portal o desde EBS?</div>
           </div>
         </td>
         <td><span class="status pending"><span class="sdot pending"></span>Pendiente</span></td>
         <td><span class="milestone">Sign-off requerimientos</span></td>
       </tr>
 
-      <!-- MES 1: BASE -->
-      <tr>
+      <tr data-phase="m1">
         <td><span class="pill m1">Abril</span></td>
-        <td style="color:#73726c">1 – 30 abr</td>
+        <td style="color:var(--muted)">1 – 30 abr</td>
         <td><span class="epica bas">Login</span></td>
         <td>
           <div class="tasks">
             <div class="task">Login vía Google (OAuth)</div>
             <div class="task">Selección de país con ícono de bandera (Argentina, Colombia, Venezuela)</div>
-            <div class="task">Lógica de cambio de país y sesión</div>
             <div class="task">Estructura de navegación: módulos Solicitudes, Recepciones, Aprobaciones</div>
-            <div class="task">Indicador: total solicitudes pendientes de aprobar</div>
-            <div class="task">Indicador: órdenes de compra por recibir</div>
             <div class="task">Inicio desarrollo módulo Solicitudes: listado con filtros (Descripción, Fecha, Estado)</div>
             <div class="task">Acciones sobre solicitud: Ver detalle, Editar, Cancelar, Copiar, Recepcionar</div>
             <div class="task">Estado "Rechazado" redirige a historial de aprobaciones</div>
@@ -151,10 +819,9 @@ tr:hover td{background:#fafaf8}
         <td><span class="milestone">Base + listado solicitudes</span></td>
       </tr>
 
-      <!-- MES 2: SOLICITUDES -->
-      <tr>
+      <tr data-phase="m2">
         <td><span class="pill m2">Mayo</span></td>
-        <td style="color:#73726c">1 – 31 may</td>
+        <td style="color:var(--muted)">1 – 31 may</td>
         <td><span class="epica sol">Solicitudes</span></td>
         <td>
           <div class="tasks">
@@ -173,10 +840,9 @@ tr:hover td{background:#fafaf8}
         <td><span class="milestone">Demo Solicitudes</span></td>
       </tr>
 
-      <!-- MES 3: RECEPCIONES -->
-      <tr>
+      <tr data-phase="m3">
         <td><span class="pill m3">Mayo</span></td>
-        <td style="color:#73726c">1 – 30 jun</td>
+        <td style="color:var(--muted)">1 – 30 jun</td>
         <td><span class="epica rec">Recepciones</span></td>
         <td>
           <div class="tasks">
@@ -195,10 +861,9 @@ tr:hover td{background:#fafaf8}
         <td><span class="milestone">Demo Recepciones</span></td>
       </tr>
 
-      <!-- MES 4: APROBACIONES -->
-      <tr>
+      <tr data-phase="m4">
         <td><span class="pill m4">Junio</span></td>
-        <td style="color:#73726c">1 – 15 jul</td>
+        <td style="color:var(--muted)">1 – 15 jul</td>
         <td><span class="epica apr">Aprobaciones</span></td>
         <td>
           <div class="tasks">
@@ -213,10 +878,9 @@ tr:hover td{background:#fafaf8}
         <td></td>
       </tr>
 
-      <!-- MES 4: RELEASE -->
-      <tr>
+      <tr data-phase="m5">
         <td><span class="pill m5">Julio</span></td>
-        <td style="color:#73726c">16 – 31 jul</td>
+        <td style="color:var(--muted)">16 – 31 jul</td>
         <td><span class="epica rel">Release MVP</span></td>
         <td>
           <div class="tasks">
@@ -234,8 +898,10 @@ tr:hover td{background:#fafaf8}
 
     </tbody>
   </table>
+  </div>
 
-  <div class="section-title">Integraciones con EBS</div>
+  <h2 class="section-title">Integraciones con EBS</h2>
+  <div class="integrations-card">
   <table>
     <thead>
       <tr>
@@ -246,6 +912,12 @@ tr:hover td{background:#fafaf8}
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td>Integración con EBS para el login</td>
+        <td><span class="epica bas">Login</span></td>
+        <td>Ver los modulos de acuerdo a el perfil de EBS</td>
+        <td>Aplica para entrar al portal</td>
+      </tr>
       <tr>
         <td>Listado de aprobadores</td>
         <td><span class="epica sol">Solicitudes</span></td>
@@ -278,18 +950,37 @@ tr:hover td{background:#fafaf8}
       </tr>
     </tbody>
   </table>
-
-  <div class="section-title">Países MVP</div>
-  <div class="countries">
-    <span class="country">🇦🇷 Argentina</span>
-    <span class="country">🇨🇴 Colombia</span>
-    <span class="country">🇻🇪 Venezuela</span>
   </div>
 
-  <div class="note" style="margin-top:16px">
+  <h2 class="section-title">Países MVP</h2>
+  <div class="countries">
+    <span class="country">
+      <span class="country-flag" aria-hidden="true">
+        <svg viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg" role="img"><title>Bandera Argentina</title><rect fill="#74ACDF" width="24" height="5.33"/><rect y="5.33" fill="#fff" width="24" height="5.34"/><rect y="10.67" fill="#74ACDF" width="24" height="5.33"/></svg>
+      </span>
+      Argentina
+    </span>
+    <span class="country">
+      <span class="country-flag" aria-hidden="true">
+        <svg viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg" role="img"><title>Bandera Colombia</title><rect fill="#FCD116" width="24" height="8"/><rect y="8" fill="#003893" width="24" height="4"/><rect y="12" fill="#CE1126" width="24" height="4"/></svg>
+      </span>
+      Colombia
+    </span>
+    <span class="country">
+      <span class="country-flag" aria-hidden="true">
+        <svg viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg" role="img"><title>Bandera Venezuela</title><rect fill="#FFCC00" width="24" height="5.33"/><rect y="5.33" fill="#00247D" width="24" height="5.34"/><rect y="10.67" fill="#CF142B" width="24" height="5.33"/></svg>
+      </span>
+      Venezuela
+    </span>
+  </div>
+
+  <div class="note footer-note">
     <strong>Nota técnica:</strong> La lógica de aprobaciones debe trabajarse por capa de negocio por país. Los montos, aprobadores y escala de aprobaciones varían según el país activo en sesión. El catálogo de productos requiere diseño funcional propio ya que no existe fuente en EBS — se recomienda definirlo durante el mes de requerimientos (Abril).
   </div>
+
+  <p class="page-footer">Roadmap Portal de Procura · Farmatodo · documento de planificación</p>
 
 </div>
 </body>
 </html>
+
